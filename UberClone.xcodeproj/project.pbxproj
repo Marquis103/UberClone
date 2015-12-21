@@ -14,7 +14,9 @@
 		F40D5EC61C2739850012B564 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F40D5EC41C2739850012B564 /* LaunchScreen.storyboard */; };
 		F40D5ED11C2739850012B564 /* UberCloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40D5ED01C2739850012B564 /* UberCloneTests.swift */; };
 		F40D5EDC1C2739850012B564 /* UberCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40D5EDB1C2739850012B564 /* UberCloneUITests.swift */; };
+		F41DAF4D1C289FFF00DF0B78 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41DAF4C1C289FFF00DF0B78 /* RequestsViewController.swift */; };
 		F43449451C278F78005DDEB1 /* RiderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43449441C278F78005DDEB1 /* RiderViewController.swift */; };
+		F4402E371C28802A008C8619 /* DriverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4402E361C28802A008C8619 /* DriverViewController.swift */; };
 		FCF56B6C7562DA86553C3620 /* Pods_UberClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F37A06BF673556587473C21 /* Pods_UberClone.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +54,9 @@
 		F40D5ED71C2739850012B564 /* UberCloneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UberCloneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F40D5EDB1C2739850012B564 /* UberCloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberCloneUITests.swift; sourceTree = "<group>"; };
 		F40D5EDD1C2739850012B564 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F41DAF4C1C289FFF00DF0B78 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		F43449441C278F78005DDEB1 /* RiderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RiderViewController.swift; sourceTree = "<group>"; };
+		F4402E361C28802A008C8619 /* DriverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,10 +130,12 @@
 				F40D5EBB1C2739850012B564 /* AppDelegate.swift */,
 				F40D5EBD1C2739850012B564 /* ViewController.swift */,
 				F40D5EBF1C2739850012B564 /* Main.storyboard */,
+				F41DAF4C1C289FFF00DF0B78 /* RequestsViewController.swift */,
+				F4402E361C28802A008C8619 /* DriverViewController.swift */,
 				F43449441C278F78005DDEB1 /* RiderViewController.swift */,
 				F40D5EC21C2739850012B564 /* Assets.xcassets */,
-				F40D5EC41C2739850012B564 /* LaunchScreen.storyboard */,
 				F40D5EC71C2739850012B564 /* Info.plist */,
+				F40D5EC41C2739850012B564 /* LaunchScreen.storyboard */,
 			);
 			path = UberClone;
 			sourceTree = "<group>";
@@ -334,6 +340,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F41DAF4D1C289FFF00DF0B78 /* RequestsViewController.swift in Sources */,
+				F4402E371C28802A008C8619 /* DriverViewController.swift in Sources */,
 				F40D5EBE1C2739850012B564 /* ViewController.swift in Sources */,
 				F43449451C278F78005DDEB1 /* RiderViewController.swift in Sources */,
 				F40D5EBC1C2739850012B564 /* AppDelegate.swift in Sources */,

@@ -79,10 +79,12 @@ class ViewController: UIViewController {
                         if let errorString = error.userInfo["error"] as? NSString {
                             self.createAlert("Signup Failed", message: errorString as String)
                         }
-                        
-                        
                     } else {
-                        self.performSegueWithIdentifier("loginRider", sender: self)
+                        if self.driverSwitch.on {
+                            self.performSegueWithIdentifier("loginDriver", sender: self)
+                        } else {
+                            self.performSegueWithIdentifier("loginRider", sender: self)
+                        }
                     }
                 }
             } else {
@@ -90,9 +92,12 @@ class ViewController: UIViewController {
                 
                 PFUser.logInWithUsernameInBackground(username.text!, password:password.text!) {
                     (user: PFUser?, error: NSError?) -> Void in
-                    if user != nil {
-                        self.performSegueWithIdentifier("loginRider", sender: self)
-                        print ("login successful")
+                    if let user = user {
+                        if user["isDriver"]! as! Bool == true {
+                            self.performSegueWithIdentifier("loginDriver", sender: self)
+                        } else {
+                            self.performSegueWithIdentifier("loginRider", sender: self)
+                        }
                     } else {
                         if let errorString = error?.userInfo["error"] as? String {
                             self.createAlert("Login Failed", message: errorString)
@@ -126,7 +131,11 @@ class ViewController: UIViewController {
     //segue before the view is loaded
     override func viewDidAppear(animated: Bool) {
         if PFUser.currentUser() != nil {
-            performSegueWithIdentifier("loginRider", sender: self)
+            if PFUser.currentUser()?["isDriver"]! as! Bool == true {
+                performSegueWithIdentifier("loginDriver", sender: self)
+            } else {
+                performSegueWithIdentifier("loginRider", sender: self)
+            }
         }
     }
 }

@@ -28,6 +28,11 @@ class RiderViewController: UIViewController {
             
             request["location"] = PFGeoPoint(latitude: latitude, longitude: longitude)
             request["username"] = PFUser.currentUser()?.username
+            let acl = PFACL()
+            acl.publicWriteAccess = true
+            acl.publicReadAccess = true
+            
+            request.ACL = acl
             
             request.saveInBackgroundWithBlock { (success, error) -> Void in
                 if success == true {
@@ -113,7 +118,7 @@ extension RiderViewController : CLLocationManagerDelegate {
             latitude = locationValue.latitude
             longitude = locationValue.longitude
             
-            print("locations = \(locationValue.latitude) \(locationValue.longitude)")
+            //print("locations = \(locationValue.latitude) \(locationValue.longitude)")
             
             let center = CLLocationCoordinate2D(latitude: locationValue.latitude, longitude: locationValue.longitude)
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
