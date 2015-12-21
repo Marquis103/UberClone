@@ -82,7 +82,7 @@ class ViewController: UIViewController {
                         
                         
                     } else {
-                        print("Successful")
+                        self.performSegueWithIdentifier("loginRider", sender: self)
                     }
                 }
             } else {
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
                 PFUser.logInWithUsernameInBackground(username.text!, password:password.text!) {
                     (user: PFUser?, error: NSError?) -> Void in
                     if user != nil {
-                        // Do stuff after successful login.
+                        self.performSegueWithIdentifier("loginRider", sender: self)
                         print ("login successful")
                     } else {
                         if let errorString = error?.userInfo["error"] as? String {
@@ -121,6 +121,13 @@ class ViewController: UIViewController {
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
+    }
+    
+    //segue before the view is loaded
+    override func viewDidAppear(animated: Bool) {
+        if PFUser.currentUser() != nil {
+            performSegueWithIdentifier("loginRider", sender: self)
+        }
     }
 }
 
