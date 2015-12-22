@@ -159,9 +159,9 @@
                                 <rect key="frame" x="25" y="81" width="550" height="293"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="owh-uF-FJ9">
-                                <rect key="frame" x="257" y="407" width="86" height="30"/>
+                                <rect key="frame" x="203" y="413" width="194" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="86" id="2AT-gO-teV"/>
+                                    <constraint firstAttribute="width" constant="194" id="2AT-gO-teV"/>
                                 </constraints>
                                 <state key="normal" title="Call An Uber"/>
                                 <connections>
@@ -173,8 +173,8 @@
                         <constraints>
                             <constraint firstItem="Hux-NG-x6I" firstAttribute="centerX" secondItem="2AN-KW-vyS" secondAttribute="centerX" id="93y-44-yw6"/>
                             <constraint firstItem="owh-uF-FJ9" firstAttribute="centerX" secondItem="2AN-KW-vyS" secondAttribute="centerX" id="Itg-8p-Xe1"/>
-                            <constraint firstItem="PwW-vi-IGf" firstAttribute="top" secondItem="owh-uF-FJ9" secondAttribute="bottom" constant="163" id="TQA-ye-TNM"/>
-                            <constraint firstItem="owh-uF-FJ9" firstAttribute="top" secondItem="Hux-NG-x6I" secondAttribute="bottom" constant="33" id="Vu9-qs-z3S"/>
+                            <constraint firstItem="PwW-vi-IGf" firstAttribute="top" secondItem="owh-uF-FJ9" secondAttribute="bottom" constant="157" id="TQA-ye-TNM"/>
+                            <constraint firstItem="owh-uF-FJ9" firstAttribute="top" secondItem="Hux-NG-x6I" secondAttribute="bottom" constant="39" id="Vu9-qs-z3S"/>
                             <constraint firstItem="Hux-NG-x6I" firstAttribute="leading" secondItem="2AN-KW-vyS" secondAttribute="leading" constant="25" id="YYZ-pF-ntb"/>
                             <constraint firstItem="DYx-sq-BNn" firstAttribute="leading" secondItem="2AN-KW-vyS" secondAttribute="leading" id="dKQ-eJ-Kyd"/>
                             <constraint firstAttribute="trailing" secondItem="Hux-NG-x6I" secondAttribute="trailing" constant="25" id="fL2-fh-en4"/>

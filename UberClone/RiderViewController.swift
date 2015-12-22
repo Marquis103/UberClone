@@ -18,6 +18,7 @@ class RiderViewController: UIViewController {
     var latitude: CLLocationDegrees = 0
     var longitude: CLLocationDegrees = 0
     var riderRequestActive = false
+    var driverOnTheWay = false
     
     @IBOutlet var callUberButton: UIButton!
     
@@ -47,27 +48,27 @@ class RiderViewController: UIViewController {
                 }
             }
         } else {
-            riderRequestActive = true
-            
-            let requestQuery = PFQuery(className: "Request")
-            requestQuery.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
-            
-            requestQuery.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-                if error != nil {
-                    print(error)
-                } else {
-                    if let objects = objects {
-                        for object in objects {
-                            object.deleteInBackground()
+                riderRequestActive = true
+                
+                let requestQuery = PFQuery(className: "Request")
+                requestQuery.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
+                
+                requestQuery.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                    if error != nil {
+                        print(error)
+                    } else {
+                        if let objects = objects {
+                            for object in objects {
+                                object.deleteInBackground()
+                            }
                         }
+                        
+                        self.callUberButton.setTitle("Call An Uber", forState: UIControlState.Normal)
+                        self.riderRequestActive = false
                     }
-                    
-                    self.callUberButton.setTitle("Call An Uber", forState: UIControlState.Normal)
-                    self.riderRequestActive = false
-                }
-            })
+                })
+            }
         }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,19 +119,80 @@ extension RiderViewController : CLLocationManagerDelegate {
             latitude = locationValue.latitude
             longitude = locationValue.longitude
             
-            //print("locations = \(locationValue.latitude) \(locationValue.longitude)")
+            
+            //check if the rider request has been responded to
+            let query = PFQuery(className:"Request")
+            if let username = PFUser.currentUser()?.username {
+                query.whereKey("username", equalTo: username)
+                query.whereKeyExists("driverResponded")
+                query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                    if error != nil {
+                        print(error)
+                    } else {
+                        if let objects = objects {
+                            if objects.count > 0 {
+                                for object in objects {
+                                    let query = PFQuery(className: "DriverLocation")
+                                    query.whereKey("username", equalTo: (object["driverResponded"] as? String)!)
+                                    
+                                    query.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                                        if error != nil {
+                                            print(error)
+                                        } else {
+                                            if let objects = objects {
+                                                for object in objects {
+                                                    if let driverLocation = object["driverLocation"] as? PFGeoPoint {
+                                                        let driverCLLocation = CLLocation(latitude: driverLocation.latitude, longitude: driverLocation.longitude)
+                                                        let userCLLocation = CLLocation(latitude: locationValue.latitude, longitude: locationValue.longitude)
+                                                        let distance = (driverCLLocation.distanceFromLocation(userCLLocation) * 0.00062137)
+                                                        let roundedDistance = Double(round(distance * 1000) / 1000)
+                                                        self.callUberButton.setTitle("Driver is \(roundedDistance) away!", forState: .Normal)
+                                                        
+                                                        self.driverOnTheWay = true
+                                                        
+                                                        let center = CLLocationCoordinate2D(latitude: locationValue.latitude, longitude: locationValue.longitude)
+                                                        
+                                                        //distance between the driver and user location
+                                                        let latDelta = abs(driverLocation.latitude - locationValue.latitude) * 2 + 0.005
+                                                        let longDelta = abs(driverLocation.longitude - locationValue.longitude) * 2 + 0.005
+                                                        
+                                                        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta))
+                                                        
+                                                        self.riderMap.setRegion(region, animated: true)
+                                                        
+                                                        self.riderMap.removeAnnotations(self.riderMap.annotations)
+                                                        var pinLocation : CLLocationCoordinate2D = CLLocationCoordinate2DMake(locationValue.latitude, locationValue.longitude)
+                                                        var objectAnnotation = MKPointAnnotation()
+                                                        objectAnnotation.coordinate = pinLocation
+                                                        objectAnnotation.title = "Your Location"
+                                                        self.riderMap.addAnnotation(objectAnnotation)
+                                                        
+                                                        self.riderMap.removeAnnotations(self.riderMap.annotations)
+                                                        pinLocation = CLLocationCoordinate2DMake(driverLocation.latitude, driverLocation.longitude)
+                                                        objectAnnotation = MKPointAnnotation()
+                                                        objectAnnotation.coordinate = pinLocation
+                                                        objectAnnotation.title = "Driver Location"
+                                                        self.riderMap.addAnnotation(objectAnnotation)
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    })
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+            
+            /*print("locations = \(locationValue.latitude) \(locationValue.longitude)")
             
             let center = CLLocationCoordinate2D(latitude: locationValue.latitude, longitude: locationValue.longitude)
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             
-            self.riderMap.setRegion(region, animated: true)
+            self.riderMap.setRegion(region, animated: true)*/
             
-            self.riderMap.removeAnnotations(riderMap.annotations)
-            let pinLocation : CLLocationCoordinate2D = CLLocationCoordinate2DMake(locationValue.latitude, locationValue.longitude)
-            let objectAnnotation = MKPointAnnotation()
-            objectAnnotation.coordinate = pinLocation
-            objectAnnotation.title = "Your Location"
-            self.riderMap.addAnnotation(objectAnnotation)
+            
         }
         
     }
