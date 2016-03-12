@@ -16,3 +16,9 @@ The driver waits for a request to be enqueued, and then selects the best rider t
 ![Alt text](https://github.com/Marquis103/UberClone/blob/master/screenshots/driverrespondtorider.png)
 ![Alt text](https://github.com/Marquis103/UberClone/blob/master/screenshots/driverdirectionstorider.png)
 ![Alt text](https://github.com/Marquis103/UberClone/blob/master/screenshots/driverIsClose.png)
+
+###Concerns
+App was built using Parse.  Will need to be transitioned and extended using a custom build Parse platform, or a different PAAS.
+
+##License
+Code released under the [MIT license](https://github.com/Marquis103/UberClone/blob/master/License)
